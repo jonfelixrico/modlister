@@ -1,6 +1,8 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { StyleProvider } from '@/client-wrapper/antd-client-wrapper'
+import MainLayout from '@/components/MainLayout'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,8 +17,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <StyleProvider hashPriority="high">
+      <html lang="en" className={inter.className}>
+        <body>
+          <MainLayout>{children}</MainLayout>
+        </body>
+      </html>
+    </StyleProvider>
   )
 }
