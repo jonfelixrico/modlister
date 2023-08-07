@@ -18,7 +18,7 @@ export default async function Mods() {
   const files = await listFiles()
 
   return (
-    <main>
+    <div className="h-full w-full overflow-auto p-6">
       <table>
         <thead>
           <tr>
@@ -33,6 +33,6 @@ export default async function Mods() {
           ))}
         </tbody>
       </table>
-    </main>
+    </div>
   )
 }
