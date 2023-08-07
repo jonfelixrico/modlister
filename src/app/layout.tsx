@@ -19,7 +19,9 @@ export default function RootLayout({
   return (
     <StyleProvider hashPriority="high">
       <html lang="en" className={inter.className}>
-        <MainLayout>{children}</MainLayout>
+        <body>
+          <MainLayout>{children}</MainLayout>
+        </body>
       </html>
     </StyleProvider>
   )
