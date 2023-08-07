@@ -1,6 +1,6 @@
 import Client from 'ssh2-sftp-client'
 
-function getClient() {
+async function getClient() {
   const host = process.env.SFTP_HOST
   const port = process.env.SFTP_PORT
   const username = process.env.SFTP_USERNAME
