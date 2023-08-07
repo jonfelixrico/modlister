@@ -43,7 +43,7 @@ async function executeInClient<T>(
 
 export type FileInfo = Client.FileInfo
 export async function listFiles(): Promise<FileInfo[]> {
-  return await executeInClient(async (client) => await client.list('/mods'))
+  return await executeInClient(async (client) => await client.list('mods'))
 }
 
 export async function getFile(filename: string): Promise<Buffer> {
