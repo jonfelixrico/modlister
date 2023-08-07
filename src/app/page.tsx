@@ -1,7 +1,7 @@
 import { FileInfo, listFiles } from '@/utils/sftp-utils'
 import { round } from 'lodash'
 
-function Row({ name, size }: FileInfo) {
+function Row({ name, size }: Pick<FileInfo, 'name' | 'size'>) {
   return (
     <tr>
       <td>{name}</td>
@@ -16,12 +16,18 @@ export default async function Home() {
   return (
     <main>
       <table>
-        <tr>
-          <th>Name</th>
-          <th>Size</th>
-        </tr>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Size</th>
+          </tr>
+        </thead>
 
-        {files?.map((file, index) => <Row {...file} key={index} />)}
+        <tbody>
+          {files.map(({ name, size }, index) => (
+            <Row name={name} size={size} key={index} />
+          ))}
+        </tbody>
       </table>
     </main>
   )
