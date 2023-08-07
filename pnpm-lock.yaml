@@ -26,9 +26,6 @@ dependencies:
   lodash:
     specifier: ^4.17.21
     version: 4.17.21
-  memorystream:
-    specifier: ^0.3.1
-    version: 0.3.1
   next:
     specifier: 13.4.13
     version: 13.4.13(react-dom@18.2.0)(react@18.2.0)
@@ -55,9 +52,6 @@ devDependencies:
   '@types/lodash':
     specifier: ^4.14.196
     version: 4.14.196
-  '@types/memorystream':
-    specifier: ^0.3.1
-    version: 0.3.1
   '@types/ssh2-sftp-client':
     specifier: ^9.0.0
     version: 9.0.0
@@ -309,18 +303,13 @@ packages:
     resolution: {integrity: sha512-22y3o88f4a94mKljsZcanlNWPzO0uBsBdzLAngf2tp533LzZcQzb6+eZPJ+vCTt+bqF2XnvT9gejTLsAcJAJyQ==}
     dev: true
 
-  /@types/memorystream@0.3.1:
-    resolution: {integrity: sha512-eSkOeBPwr0godOTPV4hQTzXZElnpyHhhCCscrcN6teFLbSPC8Xyb/rxsU2r6tg+eNzIuVX4miav3KhY6NUpgMw==}
-    dependencies:
-      '@types/node': 20.4.8
-    dev: true
-
   /@types/node@18.17.3:
     resolution: {integrity: sha512-2x8HWtFk0S99zqVQABU9wTpr8wPoaDHZUcAkoTKH+nL7kPv3WUI9cRi/Kk5Mz4xdqXSqTkKP7IWNoQQYCnDsTA==}
     dev: true
 
   /@types/node@20.4.8:
     resolution: {integrity: sha512-0mHckf6D2DiIAzh8fM8f3HQCvMKDpK94YQ0DSVkfWTG9BZleYIWudw9cJxX8oCk9bM+vAkDyujDV6dmKHbvQpg==}
+    dev: false
 
   /@types/prop-types@15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
@@ -1807,11 +1796,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
-    dev: false
-
-  /memorystream@0.3.1:
-    resolution: {integrity: sha512-S3UwM3yj5mtUSEfP41UZmt/0SCoVYUcU1rkXv+BQ5Ig8ndL4sPoJNBUJERafdPb5jjHJGuMgytgKvKIf58XNBw==}
-    engines: {node: '>= 0.10.0'}
     dev: false
 
   /merge-stream@2.0.0:
