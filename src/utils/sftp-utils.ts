@@ -1,3 +1,4 @@
+import { isError } from 'lodash'
 import Client from 'ssh2-sftp-client'
 
 async function getClient() {
@@ -45,8 +46,24 @@ export async function listFiles(): Promise<FileInfo[]> {
   return await executeInClient(async (client) => await client.list('./mods'))
 }
 
+export class FileNotFoundError extends Error {
+  constructor(error: Error) {
+    super(error.message, {
+      cause: error,
+    })
+  }
+}
+
 export async function getFile(filename: string): Promise<Buffer> {
-  return await executeInClient(
-    async (client) => (await client.get(`./mods/${filename}`)) as Buffer
-  )
+  return await executeInClient(async (client) => {
+    try {
+      return (await client.get(`./mods/${filename}`)) as Buffer
+    } catch (e) {
+      if (!isError(e) || !e.message.includes('get: no such file')) {
+        throw e
+      }
+
+      throw new FileNotFoundError(e)
+    }
+  })
 }
