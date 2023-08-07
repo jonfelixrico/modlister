@@ -5,8 +5,8 @@ import { Layout } from 'antd'
 
 export default function MainLayout(props: { children: ReactNode }) {
   return (
-    <Layout>
-      <Layout.Header>test</Layout.Header>
+    <Layout className="w-screen h-screen">
+      <Layout.Header>CSA ForgeMC</Layout.Header>
       <Layout.Content>{props.children}</Layout.Content>
     </Layout>
   )
