@@ -1,13 +1,26 @@
-import { listFiles } from '@/utils/sftp-utils'
+import { FileInfo, listFiles } from '@/utils/sftp-utils'
+
+function Row({ name, size }: FileInfo) {
+  return (
+    <tr>
+      <td>{name}</td>
+      <td>{size / 1000 / 1000} MB</td>
+    </tr>
+  )
+}
 
 export default async function Home() {
   const files = await listFiles()
 
   return (
     <main>
-      {files?.map((file, index) => (
-        <div key={index}>{JSON.stringify(file)}</div>
-      ))}
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Size</th>
+        </tr>
+        {files?.map((file, index) => <Row {...file} key={index} />)}
+      </table>
     </main>
   )
 }
