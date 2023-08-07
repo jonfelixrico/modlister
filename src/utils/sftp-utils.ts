@@ -1,4 +1,3 @@
-import path from 'path'
 import Client from 'ssh2-sftp-client'
 
 async function getClient() {
@@ -43,11 +42,11 @@ async function executeInClient<T>(
 
 export type FileInfo = Client.FileInfo
 export async function listFiles(): Promise<FileInfo[]> {
-  return await executeInClient(async (client) => await client.list('mods'))
+  return await executeInClient(async (client) => await client.list('./mods'))
 }
 
 export async function getFile(filename: string): Promise<Buffer> {
   return await executeInClient(
-    async (client) => (await client.get(path.join('mods', filename))) as Buffer
+    async (client) => (await client.get(`./mods/${filename}`)) as Buffer
   )
 }
