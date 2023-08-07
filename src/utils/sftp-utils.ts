@@ -40,6 +40,7 @@ async function executeInClient<T>(
   }
 }
 
-export async function listFiles() {
+export type FileInfo = Client.FileInfo
+export async function listFiles(): Promise<FileInfo[]> {
   return await executeInClient(async (client) => await client.list('/mods'))
 }
