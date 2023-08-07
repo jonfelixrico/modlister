@@ -39,3 +39,9 @@ async function executeInClient<T>(
     }
   }
 }
+
+export async function listFiles() {
+  await executeInClient(async (client) => {
+    return await client.list('/mods')
+  })
+}
