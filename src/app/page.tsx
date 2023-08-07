@@ -1,12 +1,22 @@
-import { Divider } from 'antd'
+import { Button, Divider } from 'antd'
 
 export default function Home() {
   return (
     <div className="h-full w-full flex flex-col items-center justify-center">
       <div className="flex flex-col items-center">
-        <h2 className="text-5xl">Download the Bundle</h2>
+        {/* TODO add functionality */}
+        <Button type="primary" size="large" style={{ height: 'auto' }}>
+          <h2 className="text-4xl">Download the Bundle</h2>
+        </Button>
         <Divider>or</Divider>
-        <h2 className="text-3xl">Download Individually</h2>
+        <Button
+          type="default"
+          size="large"
+          style={{ height: 'auto' }}
+          href="/mods"
+        >
+          <h2 className="text-2xl">Download Individually</h2>
+        </Button>
       </div>
     </div>
   )
