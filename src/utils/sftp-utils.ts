@@ -1,7 +1,5 @@
 import Client from 'ssh2-sftp-client'
 
-type SFTPWrapper = Awaited<ReturnType<Client['connect']>>
-
 function getClient() {
   const host = process.env.SFTP_HOST
   const port = process.env.SFTP_PORT
@@ -18,18 +16,19 @@ function getClient() {
   }
 
   const client = new Client()
-  return client.connect({
+  await client.connect({
     host,
     port: parseInt(port),
     username,
     password,
   })
+  return client
 }
 
 async function executeInClient<T>(
-  toExec: (client: SFTPWrapper) => Promise<T> | T
+  toExec: (client: Client) => Promise<T> | T
 ): Promise<T> {
-  let client: SFTPWrapper | null = null
+  let client: Client | null = null
 
   try {
     client = await getClient()
