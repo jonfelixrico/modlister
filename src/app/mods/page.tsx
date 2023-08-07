@@ -4,7 +4,11 @@ import { round } from 'lodash'
 function Row({ name, size }: Pick<FileInfo, 'name' | 'size'>) {
   return (
     <tr>
-      <td>{name}</td>
+      <td>
+        <a href={`/mods/${name}`} download>
+          {name}
+        </a>
+      </td>
       <td>{round(size / 1000 / 1000, 2)} MB</td>
     </tr>
   )
