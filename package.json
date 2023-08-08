@@ -22,6 +22,7 @@
     "eslint-config-next": "13.4.13",
     "expiry-map": "^2.0.0",
     "get-stream": "^7.0.1",
+    "glob": "^10.3.3",
     "graceful-fs": "^4.2.11",
     "lodash": "^4.17.21",
     "memorystream": "^0.3.1",
