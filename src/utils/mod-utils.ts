@@ -16,15 +16,15 @@ export async function generateModpack() {
   const fileInfos = await memListFiles()
   console.debug('fetched info for %s files', fileInfos.length)
 
-  const limit = pLimit(3)
-  const dlPromises = fileInfos.map((file) => {
-    return limit(() => memGetFile(file.name))
-  })
-  const results = await Promise.all(dlPromises)
+  const downloaded: Buffer[] = []
+  for (const { name } of fileInfos) {
+    downloaded.push(await memGetFile(name))
+    console.debug('acquired %s', name)
+  }
   console.debug('download complete')
 
   const zip = await generateZip(
-    results.map((buffer, index) => {
+    downloaded.map((buffer, index) => {
       return {
         buffer,
         filename: fileInfos[index].name,

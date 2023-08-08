@@ -33,6 +33,7 @@ async function executeInClient<T>(
 
   try {
     client = await getClient()
+    console.log('got client')
     return await toExec(client)
   } finally {
     if (client) {
