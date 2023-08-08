@@ -19,7 +19,7 @@ export default function Home() {
           type="default"
           size="large"
           style={{ height: 'auto' }}
-          href="/mods"
+          href="modlist"
         >
           <h2 className="text-2xl">Download Individually</h2>
         </Button>
