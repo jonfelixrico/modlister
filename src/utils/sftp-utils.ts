@@ -46,24 +46,16 @@ export async function listFiles(): Promise<FileInfo[]> {
   return await executeInClient(async (client) => await client.list('./mods'))
 }
 
-export class FileNotFoundError extends Error {
-  constructor(error: Error) {
-    super(error.message, {
-      cause: error,
-    })
-  }
-}
+export class FileNotFoundError extends Error {}
 
 export async function getFile(filename: string): Promise<Buffer> {
-  return await executeInClient(async (client) => {
-    try {
-      return (await client.get(`./mods/${filename}`)) as Buffer
-    } catch (e) {
-      if (!isError(e) || !e.message.includes('get: no such file')) {
-        throw e
-      }
+  const path = `./mods/${filename}`
 
-      throw new FileNotFoundError(e)
+  return await executeInClient(async (client) => {
+    if (!(await client.exists(path))) {
+      throw new FileNotFoundError()
     }
+
+    return (await client.get(path)) as Buffer
   })
 }
