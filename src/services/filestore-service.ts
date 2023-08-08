@@ -2,15 +2,19 @@ import path from 'path'
 import { glob } from 'glob'
 import { intersection } from 'lodash'
 import { listFiles, sftpExecute } from '@/utils/sftp-utils'
+import Bluebird from 'bluebird'
+import fs from 'graceful-fs'
+import pLimit from 'p-limit'
+import { generateZip } from '@/utils/zip-utils'
 
 export const FILESTORE_DIR = path.join(process.cwd(), 'filestore')
 
-async function getStoredFiles() {
-  return await glob('mods/*.jar')
+async function getStoredFilenames() {
+  return (await glob('mods/*.jar')).map((globPath) => path.basename(globPath))
 }
 
 async function getMissingFilenames(reference: string[]): Promise<string[]> {
-  const stored = await getStoredFiles()
+  const stored = await getStoredFilenames()
   const common = new Set(intersection(reference, stored))
   return reference.filter((str) => common.has(str))
 }
@@ -38,4 +42,24 @@ export async function isSynced() {
     modlistFiles.map((file) => file.name)
   )
   return !missing.length
+}
+
+const readFile = Bluebird.promisify(fs.readFile)
+
+export async function getZippedFilestore() {
+  const filenames = await getStoredFilenames()
+
+  const limited = pLimit(5)
+  const buffers = await Promise.all(
+    filenames.map((filename) => limited(() => readFile(filename)))
+  )
+
+  return await generateZip(
+    buffers.map((buffer, index) => {
+      return {
+        filename: filenames[index],
+        buffer,
+      }
+    })
+  )
 }
