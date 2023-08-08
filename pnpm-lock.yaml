@@ -38,6 +38,9 @@ dependencies:
   get-stream:
     specifier: ^7.0.1
     version: 7.0.1
+  graceful-fs:
+    specifier: ^4.2.11
+    version: 4.2.11
   lodash:
     specifier: ^4.17.21
     version: 4.17.21
@@ -73,6 +76,9 @@ devDependencies:
   '@types/archiver':
     specifier: ^5.3.2
     version: 5.3.2
+  '@types/graceful-fs':
+    specifier: ^4.1.6
+    version: 4.1.6
   '@types/lodash':
     specifier: ^4.14.196
     version: 4.14.196
@@ -491,6 +497,12 @@ packages:
     resolution: {integrity: sha512-IctHreBuWE5dvBDz/0WeKtyVKVRs4h75IblxOACL92wU66v+HGAfEYAOyXkOFphvRJMhuXdI9huDXpX0FC6lCw==}
     dependencies:
       '@types/readdir-glob': 1.1.1
+    dev: true
+
+  /@types/graceful-fs@4.1.6:
+    resolution: {integrity: sha512-Sig0SNORX9fdW+bQuTEovKj3uHcUL6LQKbCrrqb1X7J6/ReAbhCXRAhc+SMejhLELFj2QcyuxmUooZ4bt5ReSw==}
+    dependencies:
+      '@types/node': 20.4.8
     dev: true
 
   /@types/json5@0.0.29:
