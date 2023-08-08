@@ -1,7 +1,6 @@
 import pMemoize from 'p-memoize'
 import ExpiryMap from 'expiry-map'
 import { getFile, listFiles } from './sftp-utils'
-import pLimit from 'p-limit'
 import { generateZip } from './zip-utils'
 
 export const memListFiles = pMemoize(listFiles, {
