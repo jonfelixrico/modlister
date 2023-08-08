@@ -26,6 +26,9 @@ dependencies:
   autoprefixer:
     specifier: 10.4.14
     version: 10.4.14(postcss@8.4.27)
+  bluebird:
+    specifier: ^3.7.2
+    version: 3.7.2
   eslint:
     specifier: 8.46.0
     version: 8.46.0
@@ -76,6 +79,9 @@ devDependencies:
   '@types/archiver':
     specifier: ^5.3.2
     version: 5.3.2
+  '@types/bluebird':
+    specifier: ^3.5.38
+    version: 3.5.38
   '@types/graceful-fs':
     specifier: ^4.1.6
     version: 4.1.6
@@ -497,6 +503,10 @@ packages:
     resolution: {integrity: sha512-IctHreBuWE5dvBDz/0WeKtyVKVRs4h75IblxOACL92wU66v+HGAfEYAOyXkOFphvRJMhuXdI9huDXpX0FC6lCw==}
     dependencies:
       '@types/readdir-glob': 1.1.1
+    dev: true
+
+  /@types/bluebird@3.5.38:
+    resolution: {integrity: sha512-yR/Kxc0dd4FfwtEoLZMoqJbM/VE/W7hXn/MIjb+axcwag0iFmSPK7OBUZq1YWLynJUoWQkfUrI7T0HDqGApNSg==}
     dev: true
 
   /@types/graceful-fs@4.1.6:
@@ -934,6 +944,10 @@ packages:
       buffer: 5.7.1
       inherits: 2.0.4
       readable-stream: 3.6.2
+    dev: false
+
+  /bluebird@3.7.2:
+    resolution: {integrity: sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==}
     dev: false
 
   /bplist-parser@0.2.0:
