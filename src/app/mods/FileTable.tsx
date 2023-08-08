@@ -12,7 +12,7 @@ const COLUMNS: ColumnsType<FileInfo> = [
     dataIndex: 'name',
     render: (_, { name }) => {
       return (
-        <a href={`mods/${name}`} download>
+        <a href={`files/${name}`} download>
           {name}
         </a>
       )
