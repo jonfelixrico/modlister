@@ -1,5 +1,6 @@
 import { ContextParams } from '@/types/ContextParams.type'
-import { FileNotFoundError, memGetFile } from '@/utils/sftp-utils'
+import { memGetFile } from '@/utils/mod-utils'
+import { FileNotFoundError } from '@/utils/sftp-utils'
 import { NextResponse } from 'next/server'
 
 export async function GET(

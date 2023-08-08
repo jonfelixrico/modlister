@@ -1,7 +1,5 @@
 import { isError } from 'lodash'
 import Client from 'ssh2-sftp-client'
-import pMemoize from 'p-memoize'
-import ExpiryMap from 'expiry-map'
 
 async function getClient() {
   const host = process.env.SFTP_HOST
@@ -69,11 +67,3 @@ export async function getFile(filename: string): Promise<Buffer> {
     }
   })
 }
-
-export const memListFiles = pMemoize(listFiles, {
-  cache: new ExpiryMap(60_000 * 1),
-})
-
-export const memGetFile = pMemoize(getFile, {
-  cache: new ExpiryMap(60_000 * 60),
-})
