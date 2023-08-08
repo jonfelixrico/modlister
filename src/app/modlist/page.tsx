@@ -1,4 +1,4 @@
-import { memListFiles } from '@/services/file-service'
+import { memListFiles } from '@/utils/sftp-utils'
 import FileTable from './FileTable'
 
 export default async function Mods() {

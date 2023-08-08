@@ -1,9 +1,6 @@
-import { memGetFile } from '@/services/file-service'
 import { ContextParams } from '@/types/ContextParams.type'
-import { FileNotFoundError, getFile } from '@/utils/sftp-utils'
-import ExpiryMap from 'expiry-map'
+import { FileNotFoundError, memGetFile } from '@/utils/sftp-utils'
 import { NextResponse } from 'next/server'
-import pMemoize from 'p-memoize'
 
 export async function GET(
   _: Request,
