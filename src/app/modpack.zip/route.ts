@@ -7,14 +7,16 @@ import pMemoize from 'p-memoize'
 
 async function generateBundle() {
   const fileInfos = await listFiles()
+  console.debug('fetched info for %s files', fileInfos.length)
 
   const limit = pLimit(3)
   const dlPromises = fileInfos.map((file) => {
     return limit(() => getFile(file.name))
   })
   const results = await Promise.all(dlPromises)
+  console.debug('download complete')
 
-  return await generateZip(
+  const zip = await generateZip(
     results.map((buffer, index) => {
       return {
         buffer,
@@ -22,6 +24,9 @@ async function generateBundle() {
       }
     })
   )
+  console.debug('zip complete')
+
+  return zip
 }
 
 const memGenerateBundle = pMemoize((_: string) => generateBundle(), {
@@ -31,9 +36,11 @@ const memGenerateBundle = pMemoize((_: string) => generateBundle(), {
 export async function GET(req: Request) {
   const url = new URL(req.url)
 
+  console.log('started')
   const fileBuffer = await memGenerateBundle(
     url.searchParams.get('lastModified') ?? 'unknown'
   )
+  console.log('ended')
 
   return new NextResponse(fileBuffer)
 }
