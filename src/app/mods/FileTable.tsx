@@ -28,6 +28,15 @@ const COLUMNS: ColumnsType<FileInfo> = [
   },
 ]
 
+const getKey = (file: FileInfo) => file.name
+
 export default function FileTable(props: { files: FileInfo[] }) {
-  return <Table dataSource={props.files} columns={COLUMNS} pagination={false} />
+  return (
+    <Table
+      dataSource={props.files}
+      columns={COLUMNS}
+      pagination={false}
+      rowKey={getKey}
+    />
+  )
 }
