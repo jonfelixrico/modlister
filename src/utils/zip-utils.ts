@@ -40,7 +40,9 @@ function generateZipToStream<T extends NodeJS.WritableStream>(
   })
 }
 
-export async function generateZip(files: FileToArchive[]): Promise<Buffer> {
+export async function archiveFilesAsBuffer(
+  files: FileToArchive[]
+): Promise<Buffer> {
   const zipStream = await generateZipToStream(files, new MemoryStream())
   return await getStreamAsBuffer(zipStream)
 }

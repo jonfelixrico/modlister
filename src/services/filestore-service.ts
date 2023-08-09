@@ -5,7 +5,7 @@ import { listFiles, sftpExecute } from '@/utils/sftp-utils'
 import Bluebird from 'bluebird'
 import fs from 'graceful-fs'
 import pLimit from 'p-limit'
-import { generateZip } from '@/utils/zip-utils'
+import { archiveFilesAsBuffer } from '@/utils/zip-utils'
 
 export const FILESTORE_DIR = path.join(process.cwd(), 'filestore')
 
@@ -54,7 +54,7 @@ export async function getZippedFilestore() {
     filenames.map((filename) => limited(() => readFile(filename)))
   )
 
-  return await generateZip(
+  return await archiveFilesAsBuffer(
     buffers.map((buffer, index) => {
       return {
         filename: filenames[index],
