@@ -7,7 +7,8 @@ import fs from 'graceful-fs'
 import pLimit from 'p-limit'
 import { archiveFilesAsBuffer } from '@/utils/zip-utils'
 
-export const FILESTORE_DIR = path.join(process.cwd(), 'filestore')
+export const MODS_DIR = path.join(process.cwd(), 'mods')
+export const BUNDLES_DIR = path.join(process.cwd(), 'bundles')
 
 async function getStoredFilenames() {
   return (await glob('mods/*.jar')).map((globPath) => path.basename(globPath))
@@ -28,10 +29,7 @@ export async function executeSync() {
     )
 
     for (const filename of missingFilenames) {
-      await client.fastGet(
-        `./mods/${filename}`,
-        path.join(FILESTORE_DIR, filename)
-      )
+      await client.fastGet(`./mods/${filename}`, path.join(MODS_DIR, filename))
     }
   })
 }
@@ -45,6 +43,7 @@ export async function isSynced() {
 }
 
 const readFile = Bluebird.promisify(fs.readFile)
+const writeFile = Bluebird.promisify(fs.writeFile)
 
 export async function getZippedFilestore() {
   const filenames = await getStoredFilenames()
@@ -54,7 +53,7 @@ export async function getZippedFilestore() {
     filenames.map((filename) => limited(() => readFile(filename)))
   )
 
-  return await archiveFilesAsBuffer(
+  const buffer = await archiveFilesAsBuffer(
     buffers.map((buffer, index) => {
       return {
         filename: filenames[index],
@@ -62,4 +61,8 @@ export async function getZippedFilestore() {
       }
     })
   )
+
+  await writeFile(path.join(BUNDLES_DIR, `${Date.now()}.zip`), buffer)
+
+  return buffer
 }
