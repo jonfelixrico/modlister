@@ -60,7 +60,10 @@ export async function createBundle(name: string) {
     })
   )
 
-  await writeFile(path.join(BUNDLES_DIR, `${name}.zip`), buffer)
+  const filename = `${name}.zip`
+  console.debug('archiving mods into %s', filename)
+  await writeFile(path.join(BUNDLES_DIR, filename), buffer)
+  console.log('created archive %s', filename)
 }
 
 export async function getBundle(timestamp: number | string) {
