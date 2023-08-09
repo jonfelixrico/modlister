@@ -14,6 +14,7 @@ export default function ModpackSplash(props: { timestamp: number }) {
 
       const response = await fetch(`bundle/${props.timestamp}`, {
         cache: 'no-cache',
+        method: 'HEAD',
       })
 
       if (response.ok) {
