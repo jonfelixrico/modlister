@@ -5,5 +5,7 @@ services:
     ports:
       - 3000:3000
     volumes:
+      # these are REQUIRED to be mounted or else bugs could occur since these
+      # folders do not exist internally
       - ./bundles:/app/bundles
       - ./mods:/app/mods
