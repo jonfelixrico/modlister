@@ -1,6 +1,7 @@
 import { checkIfBundleExists } from '@/services/filestore-service'
 import { memListFiles } from '@/utils/mod-utils'
 import { Button } from 'antd'
+import ModpackSplash from './ModpackSplash'
 
 async function getLastModDt() {
   const files = await memListFiles()
@@ -17,7 +18,11 @@ export default async function ModpackPage() {
 
   return (
     <div className="h-full w-full flex flex-col justify-center items-center">
-      {bundleExists ? <DownloadBtn timestamp={lastModDt} /> : null}
+      {bundleExists ? (
+        <DownloadBtn timestamp={lastModDt} />
+      ) : (
+        <ModpackSplash timestamp={lastModDt} />
+      )}
     </div>
   )
 }
