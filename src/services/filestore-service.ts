@@ -71,7 +71,5 @@ export async function checkIfBundleExists(
   timestamp: number | string
 ): Promise<boolean> {
   const results = await glob(`bundles/${timestamp}.zip`)
-  return results.some(
-    (absPath) => path.basename(absPath, 'zip') === String(timestamp)
-  )
+  return results.length > 0
 }
