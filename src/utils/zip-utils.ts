@@ -2,12 +2,12 @@ import archiver from 'archiver'
 import MemoryStream from 'memorystream'
 import { getStreamAsBuffer } from 'get-stream'
 
-export interface ArchiveFile {
+export interface FileToArchive {
   filename: string
   buffer: Buffer
 }
 
-export function generateZip(files: ArchiveFile[]): Promise<Buffer> {
+export function generateZip(files: FileToArchive[]): Promise<Buffer> {
   return new Promise((resolve, reject) => {
     const output = new MemoryStream()
     const archive = archiver('zip')
