@@ -64,3 +64,7 @@ export async function createZippedFilestore() {
 
   return buffer
 }
+
+export async function getBundle(timestamp: number | string) {
+  return await readFile(path.join(BUNDLES_DIR, `${timestamp}.zip`))
+}
