@@ -4,6 +4,7 @@ const nextConfig = {
     // Without this, the code will break on runtime
     serverComponentsExternalPackages: ['ssh2-sftp-client'],
   },
+  output: 'standalone',
 }
 
 module.exports = nextConfig
