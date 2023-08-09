@@ -3,16 +3,11 @@ import {
   createBundle,
   executeSync,
 } from '@/services/filestore-service'
-import { memListFiles } from '@/utils/mod-utils'
 import { Button } from 'antd'
 import ModpackSplash from './ModpackSplash'
 import pMemoize from 'p-memoize'
 import ExpiryMap from 'expiry-map'
-
-async function getLastModDt() {
-  const files = await memListFiles()
-  return Math.max(...files.map(({ modifyTime }) => modifyTime))
-}
+import { getLastModified } from '@/utils/sftp-utils'
 
 function DownloadBtn(props: { timestamp: number }) {
   return <Button href={`bundle/${props.timestamp}`}>Download Bundle</Button>
@@ -27,7 +22,7 @@ const memPrepareBundle = pMemoize(prepareBundle, {
 })
 
 export default async function ModpackPage() {
-  const lastModDt = await getLastModDt()
+  const lastModDt = await getLastModified()
   const bundleExists = await checkIfBundleExists(lastModDt)
 
   if (!bundleExists) {

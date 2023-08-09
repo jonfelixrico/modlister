@@ -58,3 +58,10 @@ export async function getFile(filename: string): Promise<Buffer> {
     return (await client.get(path)) as Buffer
   })
 }
+
+export async function getLastModified(): Promise<number> {
+  return await sftpExecute(async (client) => {
+    const stat = await client.stat('./mods')
+    return stat.modifyTime
+  })
+}
