@@ -20,16 +20,26 @@ async function getMissingMods(reference: string[]): Promise<string[]> {
   return reference.filter((str) => !common.has(str))
 }
 
+const rm = Bluebird.promisify(fs.rm)
 export async function executeSync() {
   await sftpExecute(async (client) => {
-    const modlistFiles = await client.list('./mods')
+    const inModlist = (await client.list('./mods')).map((file) => file.name)
+    const inServer = await getStoredMods()
 
-    const missingFilenames = await getMissingMods(
-      modlistFiles.map((file) => file.name)
-    )
+    const common = new Set(intersection(inModlist, inServer))
 
-    for (const filename of missingFilenames) {
+    const missing = inModlist.filter((str) => !common.has(str))
+    for (const filename of missing) {
+      console.debug('downloading %s', filename)
       await client.fastGet(`./mods/${filename}`, path.join(MODS_DIR, filename))
+      console.log('downloaded %s', filename)
+    }
+
+    const extra = inServer.filter((str) => !common.has(str))
+    for (const filename of extra) {
+      console.debug('deleting %s', filename)
+      await rm(path.join(MODS_DIR, filename))
+      console.log('deleted %s', filename)
     }
   })
 }
