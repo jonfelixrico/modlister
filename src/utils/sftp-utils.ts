@@ -1,4 +1,3 @@
-import { isError } from 'lodash'
 import Client from 'ssh2-sftp-client'
 
 async function getClient() {
