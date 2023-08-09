@@ -1,6 +1,6 @@
 import {
   checkIfBundleExists,
-  createZippedFilestore,
+  createBundle,
   getBundle,
 } from '@/services/filestore-service'
 import { ContextParams } from '@/types/ContextParams.type'
@@ -18,6 +18,10 @@ export async function GET(
   return new NextResponse(await memGetBundle(timestamp))
 }
 
+const memCreateBundle = pMemoize(createBundle, {
+  cache: new ExpiryMap(1000 * 60 * 30),
+})
+
 export async function POST(
   _: Request,
   context: ContextParams<{ timestamp: string }>
@@ -30,7 +34,7 @@ export async function POST(
     })
   }
 
-  // do async process
+  memCreateBundle(timestamp)
 
   return NextResponse.json({
     status: 'QUEUED',
