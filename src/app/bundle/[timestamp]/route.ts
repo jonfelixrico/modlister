@@ -27,3 +27,22 @@ export async function GET(
     },
   })
 }
+
+export async function HEAD(
+  _: Request,
+  context: ContextParams<{ timestamp: string }>
+) {
+  const { timestamp } = context.params
+  if (await checkIfBundleExists(timestamp)) {
+    return new NextResponse()
+  }
+
+  return NextResponse.json(
+    {
+      name: 'Bundle not found',
+    },
+    {
+      status: 404,
+    }
+  )
+}
