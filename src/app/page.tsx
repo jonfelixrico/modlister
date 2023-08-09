@@ -9,8 +9,7 @@ export default function Home() {
           type="primary"
           size="large"
           style={{ height: 'auto' }}
-          href="modpack.zip"
-          download
+          href="modpack"
         >
           <h2 className="text-4xl">Download the Bundle</h2>
         </Button>
