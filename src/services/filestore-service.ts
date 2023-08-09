@@ -17,7 +17,7 @@ async function getStoredMods() {
 async function getMissingMods(reference: string[]): Promise<string[]> {
   const stored = await getStoredMods()
   const common = new Set(intersection(reference, stored))
-  return reference.filter((str) => common.has(str))
+  return reference.filter((str) => !common.has(str))
 }
 
 export async function executeSync() {
@@ -42,7 +42,9 @@ export async function createBundle(name: string) {
 
   const limited = pLimit(5)
   const buffers = await Promise.all(
-    filenames.map((filename) => limited(() => readFile(filename)))
+    filenames.map((filename) =>
+      limited(() => readFile(path.join(MODS_DIR, filename)))
+    )
   )
 
   const buffer = await archiveFilesAsBuffer(
