@@ -45,7 +45,7 @@ export async function isSynced() {
 const readFile = Bluebird.promisify(fs.readFile)
 const writeFile = Bluebird.promisify(fs.writeFile)
 
-export async function getZippedFilestore() {
+export async function createZippedFilestore() {
   const filenames = await getStoredFilenames()
 
   const limited = pLimit(5)
