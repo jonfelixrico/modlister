@@ -3,6 +3,7 @@ import { ContextParams } from '@/types/ContextParams.type'
 import ExpiryMap from 'expiry-map'
 import { NextResponse } from 'next/server'
 import pMemoize from 'p-memoize'
+import moment from 'moment'
 
 const memGetBundle = pMemoize(getBundle, { cache: new ExpiryMap(1000 * 10) })
 export async function GET(
@@ -21,9 +22,11 @@ export async function GET(
     )
   }
 
+  const asDate = new Date(parseInt(timestamp))
+  const formatted = moment(asDate).format('YYYY-MM-DD HH-mm')
   return new NextResponse(await memGetBundle(timestamp), {
     headers: {
-      'Content-Disposition': `attachment; filename="${timestamp}.zip"`,
+      'Content-Disposition': `attachment; filename="modpack ${formatted}.zip"`,
     },
   })
 }
