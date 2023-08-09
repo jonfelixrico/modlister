@@ -14,12 +14,6 @@ async function getStoredMods() {
   return (await glob('mods/*.jar')).map((globPath) => path.basename(globPath))
 }
 
-async function getMissingMods(reference: string[]): Promise<string[]> {
-  const stored = await getStoredMods()
-  const common = new Set(intersection(reference, stored))
-  return reference.filter((str) => !common.has(str))
-}
-
 const rm = Bluebird.promisify(fs.rm)
 export async function executeSync() {
   await sftpExecute(async (client) => {
