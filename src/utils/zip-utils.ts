@@ -2,38 +2,47 @@ import archiver from 'archiver'
 import MemoryStream from 'memorystream'
 import { getStreamAsBuffer } from 'get-stream'
 
-export interface ArchiveFile {
+export interface FileToArchive {
   filename: string
   buffer: Buffer
 }
 
-export function generateZip(files: ArchiveFile[]): Promise<Buffer> {
+function generateZipToStream<T extends NodeJS.WritableStream>(
+  files: FileToArchive[],
+  stream: T
+): Promise<T> {
   return new Promise((resolve, reject) => {
-    const output = new MemoryStream()
     const archive = archiver('zip')
 
-    output.on('finish', async () => {
+    stream.on('finish', () => {
       try {
-        resolve(await getStreamAsBuffer(output))
+        resolve(stream)
       } catch (e) {
         reject(e)
       }
     })
     archive.on('error', (err) => {
       reject(err)
-      output.end()
+      stream.end()
     })
     archive.on('warning', (err) => {
       if (err.code !== 'ENOENT') {
         reject(err)
-        output.end()
+        stream.end()
       }
     })
 
-    archive.pipe(output)
+    archive.pipe(stream)
     for (const { buffer, filename } of files) {
       archive.append(buffer, { name: filename })
     }
     archive.finalize()
   })
+}
+
+export async function archiveFilesAsBuffer(
+  files: FileToArchive[]
+): Promise<Buffer> {
+  const zipStream = await generateZipToStream(files, new MemoryStream())
+  return await getStreamAsBuffer(zipStream)
 }

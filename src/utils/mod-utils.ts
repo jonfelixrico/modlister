@@ -1,14 +1,14 @@
 import pMemoize from 'p-memoize'
 import ExpiryMap from 'expiry-map'
 import { getFile, listFiles } from './sftp-utils'
-import { generateZip } from './zip-utils'
+import { archiveFilesAsBuffer } from './zip-utils'
 
 export const memListFiles = pMemoize(listFiles, {
-  cache: new ExpiryMap(60_000 * 1),
+  cache: new ExpiryMap(1000 * 60),
 })
 
 export const memGetFile = pMemoize(getFile, {
-  cache: new ExpiryMap(60_000 * 60),
+  cache: new ExpiryMap(1000 * 60 * 60),
 })
 
 export async function generateModpack() {
@@ -22,7 +22,7 @@ export async function generateModpack() {
   }
   console.debug('download complete')
 
-  const zip = await generateZip(
+  const zip = await archiveFilesAsBuffer(
     downloaded.map((buffer, index) => {
       return {
         buffer,
