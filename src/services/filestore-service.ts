@@ -43,7 +43,7 @@ export async function isSynced() {
 const readFile = Bluebird.promisify(fs.readFile)
 const writeFile = Bluebird.promisify(fs.writeFile)
 
-export async function createZippedFilestore() {
+export async function createBundle(name: string) {
   const filenames = await getStoredMods()
 
   const limited = pLimit(5)
@@ -60,9 +60,7 @@ export async function createZippedFilestore() {
     })
   )
 
-  await writeFile(path.join(BUNDLES_DIR, `${Date.now()}.zip`), buffer)
-
-  return buffer
+  await writeFile(path.join(BUNDLES_DIR, `${name}.zip`), buffer)
 }
 
 export async function getBundle(timestamp: number | string) {
