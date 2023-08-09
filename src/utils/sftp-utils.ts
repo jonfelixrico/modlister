@@ -1,4 +1,3 @@
-import { isError } from 'lodash'
 import Client from 'ssh2-sftp-client'
 
 async function getClient() {
@@ -26,7 +25,7 @@ async function getClient() {
   return client
 }
 
-async function executeInClient<T>(
+export async function sftpExecute<T>(
   toExec: (client: Client) => Promise<T> | T
 ): Promise<T> {
   let client: Client | null = null
@@ -43,27 +42,26 @@ async function executeInClient<T>(
 
 export type FileInfo = Client.FileInfo
 export async function listFiles(): Promise<FileInfo[]> {
-  return await executeInClient(async (client) => await client.list('./mods'))
+  return await sftpExecute(async (client) => await client.list('./mods'))
 }
 
-export class FileNotFoundError extends Error {
-  constructor(error: Error) {
-    super(error.message, {
-      cause: error,
-    })
-  }
-}
+export class FileNotFoundError extends Error {}
 
 export async function getFile(filename: string): Promise<Buffer> {
-  return await executeInClient(async (client) => {
-    try {
-      return (await client.get(`./mods/${filename}`)) as Buffer
-    } catch (e) {
-      if (!isError(e) || !e.message.includes('get: no such file')) {
-        throw e
-      }
+  const path = `./mods/${filename}`
 
-      throw new FileNotFoundError(e)
+  return await sftpExecute(async (client) => {
+    if (!(await client.exists(path))) {
+      throw new FileNotFoundError()
     }
+
+    return (await client.get(path)) as Buffer
+  })
+}
+
+export async function getLastModified(): Promise<number> {
+  return await sftpExecute(async (client) => {
+    const stat = await client.stat('./mods')
+    return stat.modifyTime
   })
 }

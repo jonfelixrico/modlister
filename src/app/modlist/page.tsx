@@ -1,9 +1,5 @@
-import { listFiles } from '@/utils/sftp-utils'
+import { memListFiles } from '@/utils/mod-utils'
 import FileTable from './FileTable'
-import pMemoize from 'p-memoize'
-import ExpiryMap from 'expiry-map'
-
-const memListFiles = pMemoize(listFiles, { cache: new ExpiryMap(60_000 * 1) })
 
 export default async function Mods() {
   const files = await memListFiles()
