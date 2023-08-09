@@ -10,12 +10,12 @@ import { archiveFilesAsBuffer } from '@/utils/zip-utils'
 export const MODS_DIR = path.join(process.cwd(), 'mods')
 export const BUNDLES_DIR = path.join(process.cwd(), 'bundles')
 
-async function getStoredFilenames() {
+async function getStoredMods() {
   return (await glob('mods/*.jar')).map((globPath) => path.basename(globPath))
 }
 
-async function getMissingFilenames(reference: string[]): Promise<string[]> {
-  const stored = await getStoredFilenames()
+async function getMissingMods(reference: string[]): Promise<string[]> {
+  const stored = await getStoredMods()
   const common = new Set(intersection(reference, stored))
   return reference.filter((str) => common.has(str))
 }
@@ -24,7 +24,7 @@ export async function executeSync() {
   await sftpExecute(async (client) => {
     const modlistFiles = await client.list('./mods')
 
-    const missingFilenames = await getMissingFilenames(
+    const missingFilenames = await getMissingMods(
       modlistFiles.map((file) => file.name)
     )
 
@@ -36,9 +36,7 @@ export async function executeSync() {
 
 export async function isSynced() {
   const modlistFiles = await listFiles()
-  const missing = await getMissingFilenames(
-    modlistFiles.map((file) => file.name)
-  )
+  const missing = await getMissingMods(modlistFiles.map((file) => file.name))
   return !missing.length
 }
 
@@ -46,7 +44,7 @@ const readFile = Bluebird.promisify(fs.readFile)
 const writeFile = Bluebird.promisify(fs.writeFile)
 
 export async function createZippedFilestore() {
-  const filenames = await getStoredFilenames()
+  const filenames = await getStoredMods()
 
   const limited = pLimit(5)
   const buffers = await Promise.all(
