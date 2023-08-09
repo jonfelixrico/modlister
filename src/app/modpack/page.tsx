@@ -9,6 +9,8 @@ import pMemoize from 'p-memoize'
 import ExpiryMap from 'expiry-map'
 import { getLastModified } from '@/utils/sftp-utils'
 
+export const dynamic = 'force-dynamic'
+
 function DownloadBtn(props: { timestamp: number }) {
   return <Button href={`bundle/${props.timestamp}`}>Download Bundle</Button>
 }

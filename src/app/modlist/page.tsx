@@ -1,6 +1,8 @@
 import { memListFiles } from '@/utils/mod-utils'
 import FileTable from './FileTable'
 
+export const dynamic = 'force-dynamic'
+
 export default async function Mods() {
   const files = await memListFiles()
 
