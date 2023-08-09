@@ -68,3 +68,12 @@ export async function createZippedFilestore() {
 export async function getBundle(timestamp: number | string) {
   return await readFile(path.join(BUNDLES_DIR, `${timestamp}.zip`))
 }
+
+export async function checkIfBundleExists(
+  timestamp: number | string
+): Promise<boolean> {
+  const results = await glob(`bundles/${timestamp}.zip`)
+  return results.some(
+    (absPath) => path.basename(absPath, 'zip') === String(timestamp)
+  )
+}
