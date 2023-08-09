@@ -34,12 +34,6 @@ export async function executeSync() {
   })
 }
 
-export async function isSynced() {
-  const modlistFiles = await listFiles()
-  const missing = await getMissingMods(modlistFiles.map((file) => file.name))
-  return !missing.length
-}
-
 const readFile = Bluebird.promisify(fs.readFile)
 const writeFile = Bluebird.promisify(fs.writeFile)
 
