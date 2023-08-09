@@ -18,7 +18,11 @@ export default function ModpackSplash(props: { timestamp: number }) {
   )
 
   if (isReady) {
-    return <Button href={`bundle/${props.timestamp}`}>Download Bundle</Button>
+    return (
+      <Button href={`bundle/${props.timestamp}`}>
+        Download Bundle
+      </Button>
+    )
   } else {
     return (
       <div className="flex flex-row gap-5 items-center">
