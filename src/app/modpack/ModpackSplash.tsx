@@ -21,8 +21,9 @@ export default function ModpackSplash(props: { timestamp: number }) {
     return <Button href={`bundle/${props.timestamp}`}>Download Bundle</Button>
   } else {
     return (
-      <div className="flex flex-row">
-        <Spin /> Preparing your modpack
+      <div className="flex flex-row gap-5 items-center">
+        <Spin />
+        <div className="text-xl">Preparing your modpack</div>
       </div>
     )
   }
