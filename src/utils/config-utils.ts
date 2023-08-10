@@ -66,13 +66,18 @@ export function getConfig(): Promise<Record<string, unknown>> {
 }
 
 export async function getValue<T = string>(
-  path: string,
-  throwIfUndefined?: boolean
+  path: string
 ): Promise<T | undefined> {
   const valueInPath = get(await getConfig(), path, undefined)
-  if (valueInPath === undefined && throwIfUndefined) {
+  return valueInPath as T
+}
+
+export async function getValueOrThrow<T = string>(path: string): Promise<T> {
+  const value = await getValue<T>(path)
+
+  if (value === undefined) {
     throw new Error(`Path ${path} is undefined`)
   }
 
-  return valueInPath as T
+  return value
 }
