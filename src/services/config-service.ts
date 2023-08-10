@@ -1,4 +1,3 @@
-import Bluebird from 'bluebird'
 import fs from 'graceful-fs'
 import { get } from 'lodash'
 import path from 'path'
