@@ -9,4 +9,8 @@ README.md
 # app file caches
 mods
 bundles
+config
 .env.local
+
+/config/config.*.json
+!/config/config.default.json
