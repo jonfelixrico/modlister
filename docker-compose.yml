@@ -9,5 +9,4 @@ services:
       # folders do not exist internally
       - ./bundles:/app/bundles
       - ./mods:/app/mods
-    env_file:
-      - .env.local
+      - ./config:/app/config
