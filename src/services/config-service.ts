@@ -2,6 +2,13 @@ import fs from 'graceful-fs'
 import { get } from 'lodash'
 import path from 'path'
 
+/*
+ * This entire service exists because I can't get Docker env vars to work with Next.js.
+ * Env vars from Docker is not available during runtime EVEN IN THE SERVER SIDE.
+ *
+ * This sort of works like a ghetto way to have env vars.
+ */
+
 const ROOT_DIR = `config`
 const FILE_SEQUENCE = ['config.default.json', './config.json']
 
