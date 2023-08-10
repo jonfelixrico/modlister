@@ -1,5 +1,6 @@
 import Bluebird from 'bluebird'
 import fs from 'graceful-fs'
+import { get } from 'lodash'
 import path from 'path'
 
 const ROOT_DIR = `config`
@@ -65,8 +66,13 @@ export function getConfig(): Promise<Record<string, unknown>> {
 }
 
 export async function getValue<T = string>(
-  key: string
+  path: string,
+  throwIfUndefined?: boolean
 ): Promise<T | undefined> {
-  const values = await getConfig()
-  return values[key] as T
+  const valueInPath = get(await getConfig(), path, undefined)
+  if (valueInPath === undefined && throwIfUndefined) {
+    throw new Error(`Path ${path} is undefined`)
+  }
+
+  return valueInPath as T
 }
