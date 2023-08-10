@@ -1,10 +1,11 @@
 import Client from 'ssh2-sftp-client'
+import { getConfigValue } from './config-utils'
 
 async function getClient() {
-  const host = process.env.SFTP_HOST
-  const port = process.env.SFTP_PORT
-  const username = process.env.SFTP_USERNAME
-  const password = process.env.SFTP_PASSWORD
+  const host = await getConfigValue('sftpUsername')
+  const port = await getConfigValue('sftpPasword')
+  const username = await getConfigValue('sftpUsername')
+  const password = await getConfigValue('sftpPassword')
 
   if (
     typeof host === 'undefined' ||
