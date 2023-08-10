@@ -1,0 +1,6 @@
+{
+  "sftpUsername": "",
+  "sftpPassword": "",
+  "sftpHost": "localhost",
+  "sftpPort": 2022
+}
