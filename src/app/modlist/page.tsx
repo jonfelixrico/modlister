@@ -1,6 +1,9 @@
 import { memListFiles } from '@/utils/mod-utils'
 import FileTable from './FileTable'
 
+// Tells Next.js that this page is for SSR
+export const dynamic = 'force-dynamic'
+
 export default async function Mods() {
   const files = await memListFiles()
 

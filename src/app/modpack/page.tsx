@@ -9,6 +9,9 @@ import pMemoize from 'p-memoize'
 import ExpiryMap from 'expiry-map'
 import { getLastModified } from '@/utils/sftp-utils'
 
+// Tells Next.js that this page is for SSR
+export const dynamic = 'force-dynamic'
+
 function DownloadBtn(props: { timestamp: number }) {
   return <Button href={`bundle/${props.timestamp}`}>Download Bundle</Button>
 }
