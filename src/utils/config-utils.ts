@@ -64,7 +64,7 @@ export function getConfig(): Promise<Record<string, unknown>> {
   return newPromise
 }
 
-export async function getConfigValue<T = string>(
+export async function getValue<T = string>(
   key: string
 ): Promise<T | undefined> {
   const values = await getConfig()
