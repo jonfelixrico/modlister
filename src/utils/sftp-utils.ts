@@ -1,25 +1,16 @@
 import Client from 'ssh2-sftp-client'
-import { getValue } from './config-utils'
+import { getValueOrThrow } from './config-utils'
 
 async function getClient() {
-  const host = await getValue('sftpUsername')
-  const port = await getValue('sftpPasword')
-  const username = await getValue('sftpUsername')
-  const password = await getValue('sftpPassword')
-
-  if (
-    typeof host === 'undefined' ||
-    typeof port === 'undefined' ||
-    typeof password === 'undefined' ||
-    typeof username === 'undefined'
-  ) {
-    throw new Error('bad config')
-  }
+  const host = await getValueOrThrow('sftp.host')
+  const port = await getValueOrThrow<number>('sftp.port')
+  const username = await getValueOrThrow('sftp.username')
+  const password = await getValueOrThrow('sftp.password')
 
   const client = new Client()
   await client.connect({
     host,
-    port: parseInt(port),
+    port,
     username,
     password,
   })
