@@ -34,6 +34,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# app file store
+# app folders
 /bundles
 /mods
+
+/config/config.*.json
+!/config/config.default.json
