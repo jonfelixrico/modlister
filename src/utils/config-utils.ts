@@ -17,9 +17,9 @@ function readJson(path: string): Promise<Record<string, unknown>> {
         if (err) {
           if (err.code === 'ENOENT') {
             return resolve({})
+          } else {
+            return reject(err)
           }
-        } else {
-          return reject(err)
         }
 
         try {
@@ -36,7 +36,7 @@ async function readConfigFiles(): Promise<Record<string, unknown>> {
   const obj: Record<string, unknown> = {}
 
   for (const filename of FILE_SEQUENCE) {
-    const absPath = path.join(ROOT_DIR, filename)
+    const absPath = path.join(process.cwd(), ROOT_DIR, filename)
 
     try {
       Object.assign(obj, await readJson(absPath))
