@@ -38,5 +38,4 @@ next-env.d.ts
 /bundles
 /mods
 
-/config/config.*.json
-!/config/config.default.json
+/config/config.json
