@@ -1,5 +1,5 @@
 import Client from 'ssh2-sftp-client'
-import { getValueOrThrow } from './config-utils'
+import { getValueOrThrow } from '../services/config-service'
 
 async function getClient() {
   const host = await getValueOrThrow('sftp.host')
