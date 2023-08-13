@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - 'master'
-      - 'release-test' # TODO remove this
+      - 'alpha/*'
 
 jobs:
   verify:
