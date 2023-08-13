@@ -27,7 +27,7 @@ jobs:
         id: meta
         uses: docker/metadata-action
         with:
-          images: my-docker-hub-namespace/my-docker-hub-repository
+          images: ${{ secrets.DOCKER_IMAGES }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action
