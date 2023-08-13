@@ -1,4 +1,4 @@
-name: Pull Request Workflow
+name: Docker build workflow
 on:
   push:
     branches:
