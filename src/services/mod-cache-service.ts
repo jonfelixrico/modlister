@@ -3,10 +3,12 @@ import { glob } from 'glob'
 import pLimit from 'p-limit'
 import path from 'path'
 
-export const MODS_DIR = path.join(process.cwd(), 'mods')
+export const MODS_DIR = path.join(process.cwd(), 'filecache/mods')
 
 export async function getFilenames() {
-  return (await glob('mods/*.jar')).map((globPath) => path.basename(globPath))
+  return (await glob('filecache/mods/*.jar')).map((globPath) =>
+    path.basename(globPath)
+  )
 }
 
 function getPath(filename: string) {
