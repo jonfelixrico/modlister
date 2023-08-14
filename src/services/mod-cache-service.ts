@@ -3,7 +3,7 @@ import { glob } from 'glob'
 import pLimit from 'p-limit'
 import path from 'path'
 
-export const MODS_DIR = path.join(process.cwd(), 'filecache/mods')
+export const DIR = path.join(process.cwd(), 'filecache/mods')
 
 export async function getModCacheFilenames() {
   return (await glob('filecache/mods/*.jar')).map((globPath) =>
@@ -12,7 +12,7 @@ export async function getModCacheFilenames() {
 }
 
 function getPath(filename: string) {
-  return path.join(MODS_DIR, filename)
+  return path.join(DIR, filename)
 }
 
 export async function deleteFromModCache(filenames: string[]) {
