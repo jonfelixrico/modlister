@@ -30,6 +30,6 @@ export async function getBundle(filename: string) {
 export async function checkIfBundleExists(
   timestamp: number | string
 ): Promise<boolean> {
-  const results = await glob(`${DIR}.zip`)
+  const results = await glob(path.join(DIR, `${timestamp}.zip`))
   return results.length > 0
 }
