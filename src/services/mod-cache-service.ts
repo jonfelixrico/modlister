@@ -5,7 +5,7 @@ import path from 'path'
 
 export const MODS_DIR = path.join(process.cwd(), 'filecache/mods')
 
-export async function getFilenames() {
+export async function getModCacheFilenames() {
   return (await glob('filecache/mods/*.jar')).map((globPath) =>
     path.basename(globPath)
   )
@@ -15,7 +15,7 @@ function getPath(filename: string) {
   return path.join(MODS_DIR, filename)
 }
 
-export async function deleteFromCache(filenames: string[]) {
+export async function deleteFromModCache(filenames: string[]) {
   for (const filename of filenames) {
     console.debug('deleting %s...', filename)
     await rm(getPath(filename))
@@ -28,7 +28,7 @@ interface FileData {
   data: Buffer
 }
 
-export async function saveToCache(files: FileData[]) {
+export async function saveToModCache(files: FileData[]) {
   for (const { filename, data } of files) {
     console.debug('saving %s...')
     await writeFile(filename, data)
@@ -36,8 +36,8 @@ export async function saveToCache(files: FileData[]) {
   }
 }
 
-export async function getFiles(): Promise<FileData[]> {
-  const filenames = await getFilenames()
+export async function getModCacheContents(): Promise<FileData[]> {
+  const filenames = await getModCacheFilenames()
 
   const limited = pLimit(5)
   const buffers = await Promise.all(
