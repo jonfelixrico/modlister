@@ -6,9 +6,7 @@ import path from 'path'
 export const DIR = path.join(process.cwd(), 'filecache/mods')
 
 export async function getModCacheFilenames() {
-  return (await glob('filecache/mods/*.jar')).map((globPath) =>
-    path.basename(globPath)
-  )
+  return (await glob(`${DIR}/*.jar`)).map((globPath) => path.basename(globPath))
 }
 
 function getPath(filename: string) {
