@@ -8,6 +8,7 @@ import {
 } from './mod-cache-service'
 import Client from 'ssh2-sftp-client'
 import { File } from '@/types/File.interface'
+import pLimit from 'p-limit'
 
 async function fetchFile(client: Client, filename: string): Promise<File> {
   console.debug('fetching %s...', filename)
@@ -27,10 +28,11 @@ export async function syncMods() {
 
     const common = new Set(intersection(inSource, inCache))
 
+    const concurrentFetchLimiter = pLimit(3)
     const missingFilenames = inSource.filter((str) => !common.has(str))
-    const fetchedFilesPromises = missingFilenames.map((filename) =>
-      fetchFile(client, filename)
-    )
+    const fetchedFilesPromises = missingFilenames.map((filename) => {
+      return concurrentFetchLimiter(() => fetchFile(client, filename))
+    })
     const fetchedFiles = await Promise.all(fetchedFilesPromises)
     await saveToModCache(fetchedFiles)
 
