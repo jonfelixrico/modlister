@@ -24,7 +24,7 @@ export async function createArchive(archiveFilename: string, files: File[]) {
 }
 
 export async function getArchive(filename: string) {
-  return await readFile(path.join(ABSOLUTE_DIR, filename))
+  return await readFile(path.join(ABSOLUTE_DIR, `${filename}.zip`))
 }
 
 export async function checkIfArchiveExists(
