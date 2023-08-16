@@ -6,6 +6,7 @@ import { getLastModified } from '@/utils/sftp-utils'
 import { checkIfArchiveExists, createArchive } from '@/services/archive-service'
 import { syncMods } from '@/services/mod-manager-service'
 import { getModCacheContents } from '@/services/mod-cache-service'
+import { getAuxModLastModified } from '@/services/aux-mod-service'
 
 // Tells Next.js that this page is for SSR
 export const dynamic = 'force-dynamic'
@@ -24,7 +25,10 @@ const memPrepareBundle = pMemoize(prepareBundle, {
 })
 
 export default async function ModpackPage() {
-  const lastModDt = await getLastModified()
+  const lastModDt = Math.max(
+    await getLastModified(),
+    await getAuxModLastModified()
+  )
   const bundleExists = await checkIfArchiveExists(lastModDt)
 
   if (!bundleExists) {
