@@ -4,14 +4,17 @@ import { glob } from 'glob'
 import pLimit from 'p-limit'
 import path from 'path'
 
-export const DIR = path.join(process.cwd(), 'files/mods')
+const RELATIVE_DIR = 'files/mods'
+const ABSOLUTE_DIR = path.join(process.cwd(), RELATIVE_DIR)
 
 export async function getModCacheFilenames() {
-  return (await glob(`${DIR}/*.jar`)).map((globPath) => path.basename(globPath))
+  return (await glob(`${RELATIVE_DIR}/*.jar`)).map((globPath) =>
+    path.basename(globPath)
+  )
 }
 
 function getPath(filename: string) {
-  return path.join(DIR, filename)
+  return path.join(ABSOLUTE_DIR, filename)
 }
 
 export async function deleteFromModCache(filenames: string[]) {
