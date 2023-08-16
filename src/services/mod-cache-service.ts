@@ -4,7 +4,7 @@ import { glob } from 'glob'
 import pLimit from 'p-limit'
 import path from 'path'
 
-export const DIR = path.join(process.cwd(), 'filecache/mods')
+export const DIR = path.join(process.cwd(), 'files/mods')
 
 export async function getModCacheFilenames() {
   return (await glob(`${DIR}/*.jar`)).map((globPath) => path.basename(globPath))
