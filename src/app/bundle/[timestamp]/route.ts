@@ -1,17 +1,17 @@
-import { checkIfBundleExists, getBundle } from '@/services/filestore-service'
 import { ContextParams } from '@/types/ContextParams.type'
 import ExpiryMap from 'expiry-map'
 import { NextResponse } from 'next/server'
 import pMemoize from 'p-memoize'
 import moment from 'moment'
+import { checkIfArchiveExists, getArchive } from '@/services/archive-service'
 
-const memGetBundle = pMemoize(getBundle, { cache: new ExpiryMap(1000 * 10) })
+const memGetBundle = pMemoize(getArchive, { cache: new ExpiryMap(1000 * 10) })
 export async function GET(
   _: Request,
   context: ContextParams<{ timestamp: string }>
 ) {
   const { timestamp } = context.params
-  if (!(await checkIfBundleExists(timestamp))) {
+  if (!(await checkIfArchiveExists(timestamp))) {
     return NextResponse.json(
       {
         name: 'Bundle not found',
@@ -36,7 +36,7 @@ export async function HEAD(
   context: ContextParams<{ timestamp: string }>
 ) {
   const { timestamp } = context.params
-  if (await checkIfBundleExists(timestamp)) {
+  if (await checkIfArchiveExists(timestamp)) {
     return new NextResponse()
   }
 
