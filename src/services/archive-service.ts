@@ -8,14 +8,7 @@ const RELATIVE_DIR = 'files/archives'
 const ABSOLUTE_DIR = path.join(process.cwd(), RELATIVE_DIR)
 
 export async function createArchive(archiveFilename: string, files: File[]) {
-  const buffer = await archiveFilesAsBuffer(
-    files.map((file) => {
-      return {
-        filename: file.filename,
-        buffer: file.data, // TODO change archiveFilesAsBuffer to use the File interface
-      }
-    })
-  )
+  const buffer = await archiveFilesAsBuffer(files)
 
   const filename = `${archiveFilename}.zip`
   console.debug('archiving mods into %s', filename)
