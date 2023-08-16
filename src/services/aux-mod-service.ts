@@ -1,5 +1,6 @@
 import { File } from '@/types/File.interface'
-import { readFile } from '@/utils/fs-utils'
+import { readFile, stat } from '@/utils/fs-utils'
+import { Stats } from 'fs'
 import { glob } from 'glob'
 import pLimit from 'p-limit'
 import path from 'path'
@@ -29,4 +30,9 @@ export async function getAuxModContents(): Promise<File[]> {
       filename: filenames[index],
     }
   })
+}
+
+export async function getAuxModLastModified(): Promise<number> {
+  const { mtime } = (await stat(ABSOLUTE_DIR)) as Stats
+  return mtime.getTime()
 }
