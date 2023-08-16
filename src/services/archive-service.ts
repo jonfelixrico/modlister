@@ -30,6 +30,6 @@ export async function getArchive(filename: string) {
 export async function checkIfArchiveExists(
   timestamp: number | string
 ): Promise<boolean> {
-  const results = await glob(path.join(RELATIVE_DIR, `${timestamp}.zip`))
+  const results = await glob(`${RELATIVE_DIR}/${timestamp}.zip`)
   return results.length > 0
 }
