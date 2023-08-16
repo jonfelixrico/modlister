@@ -35,7 +35,6 @@ yarn-error.log*
 next-env.d.ts
 
 # app folders
-/bundles
-/mods
+/files
 
 /config/config.json

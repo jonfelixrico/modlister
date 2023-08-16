@@ -1,14 +1,10 @@
 import archiver from 'archiver'
 import MemoryStream from 'memorystream'
 import { getStreamAsBuffer } from 'get-stream'
-
-export interface FileToArchive {
-  filename: string
-  buffer: Buffer
-}
+import { File } from '@/types/File.interface'
 
 function generateZipToStream<T extends NodeJS.WritableStream>(
-  files: FileToArchive[],
+  files: File[],
   stream: T
 ): Promise<T> {
   return new Promise((resolve, reject) => {
@@ -33,16 +29,14 @@ function generateZipToStream<T extends NodeJS.WritableStream>(
     })
 
     archive.pipe(stream)
-    for (const { buffer, filename } of files) {
-      archive.append(buffer, { name: filename })
+    for (const { data, filename } of files) {
+      archive.append(data, { name: filename })
     }
     archive.finalize()
   })
 }
 
-export async function archiveFilesAsBuffer(
-  files: FileToArchive[]
-): Promise<Buffer> {
+export async function archiveFilesAsBuffer(files: File[]): Promise<Buffer> {
   const zipStream = await generateZipToStream(files, new MemoryStream())
   return await getStreamAsBuffer(zipStream)
 }
