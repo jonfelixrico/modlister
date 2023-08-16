@@ -27,7 +27,7 @@ export async function getBundle(filename: string) {
   return await readFile(path.join(ARCHIVE_PATH, filename))
 }
 
-export async function checkIfBundleExists(
+export async function checkIfArchiveExists(
   timestamp: number | string
 ): Promise<boolean> {
   const results = await glob(path.join(DIR, `${timestamp}.zip`))
