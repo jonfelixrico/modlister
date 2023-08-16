@@ -6,7 +6,10 @@ import { getLastModified } from '@/utils/sftp-utils'
 import { checkIfArchiveExists, createArchive } from '@/services/archive-service'
 import { syncMods } from '@/services/mod-manager-service'
 import { getModCacheContents } from '@/services/mod-cache-service'
-import { getAuxModLastModified } from '@/services/aux-mod-service'
+import {
+  getAuxModContents,
+  getAuxModLastModified,
+} from '@/services/aux-mod-service'
 
 // Tells Next.js that this page is for SSR
 export const dynamic = 'force-dynamic'
@@ -18,7 +21,8 @@ function DownloadBtn(props: { timestamp: number }) {
 async function prepareBundle(timestamp: string) {
   await syncMods()
   const mods = await getModCacheContents()
-  await createArchive(timestamp, mods)
+  const auxMods = await getAuxModContents()
+  await createArchive(timestamp, [...mods, ...auxMods])
 }
 const memPrepareBundle = pMemoize(prepareBundle, {
   cache: new ExpiryMap(1000 * 60 * 30),
