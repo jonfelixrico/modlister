@@ -23,7 +23,7 @@ export async function createArchive(archiveFilename: string, files: File[]) {
   console.log('created archive %s', filename)
 }
 
-export async function getBundle(filename: string) {
+export async function getArchive(filename: string) {
   return await readFile(path.join(ARCHIVE_PATH, filename))
 }
 
