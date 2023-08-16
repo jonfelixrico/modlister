@@ -24,9 +24,9 @@ export async function deleteFromModCache(filenames: string[]) {
 
 export async function saveToModCache(files: File[]) {
   for (const { filename, data } of files) {
-    console.debug('saving %s...')
+    console.debug('saving %s...', filename)
     await writeFile(filename, data)
-    console.debug('saved %s'), filename
+    console.debug('saved %s', filename)
   }
 }
 
