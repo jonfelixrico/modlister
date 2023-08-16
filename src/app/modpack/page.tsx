@@ -1,13 +1,11 @@
-import {
-  checkIfBundleExists,
-  createBundle,
-  executeSync,
-} from '@/services/filestore-service'
 import { Button } from 'antd'
 import ModpackSplash from './ModpackSplash'
 import pMemoize from 'p-memoize'
 import ExpiryMap from 'expiry-map'
 import { getLastModified } from '@/utils/sftp-utils'
+import { checkIfArchiveExists, createArchive } from '@/services/archive-service'
+import { syncMods } from '@/services/mod-manager-service'
+import { getModCacheContents } from '@/services/mod-cache-service'
 
 // Tells Next.js that this page is for SSR
 export const dynamic = 'force-dynamic'
@@ -17,8 +15,9 @@ function DownloadBtn(props: { timestamp: number }) {
 }
 
 async function prepareBundle(timestamp: string) {
-  await executeSync()
-  await createBundle(timestamp)
+  await syncMods()
+  const mods = await getModCacheContents()
+  await createArchive(timestamp, mods)
 }
 const memPrepareBundle = pMemoize(prepareBundle, {
   cache: new ExpiryMap(1000 * 60 * 30),
@@ -26,7 +25,7 @@ const memPrepareBundle = pMemoize(prepareBundle, {
 
 export default async function ModpackPage() {
   const lastModDt = await getLastModified()
-  const bundleExists = await checkIfBundleExists(lastModDt)
+  const bundleExists = await checkIfArchiveExists(lastModDt)
 
   if (!bundleExists) {
     // intended to be done asynchronously

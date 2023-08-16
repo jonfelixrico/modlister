@@ -7,6 +7,6 @@ services:
     volumes:
       # these are REQUIRED to be mounted or else bugs could occur since these
       # folders do not exist internally
-      - ./bundles:/app/bundles
-      - ./mods:/app/mods
+      - ./files/archives:/app/files/archives
+      - ./files/mods:/app/files/mods
       - ./config:/app/config
