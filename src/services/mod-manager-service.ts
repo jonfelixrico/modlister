@@ -9,9 +9,13 @@ import {
 import Client from 'ssh2-sftp-client'
 import { File } from '@/types/File.interface'
 
-async function getFile(client: Client, filename: string): Promise<File> {
+async function fetchFile(client: Client, filename: string): Promise<File> {
+  console.debug('fetching %s...', filename)
+  const data = (await client.get(`./mods/${filename}`)) as Buffer
+  console.log('fetched %s', filename)
+
   return {
-    data: (await client.get(`./mods/${filename}`)) as Buffer,
+    data,
     filename,
   }
 }
@@ -25,7 +29,7 @@ export async function syncMods() {
 
     const missingFilenames = inSource.filter((str) => !common.has(str))
     const fetchedFilesPromises = missingFilenames.map((filename) =>
-      getFile(client, filename)
+      fetchFile(client, filename)
     )
     const fetchedFiles = await Promise.all(fetchedFilesPromises)
     await saveToModCache(fetchedFiles)
