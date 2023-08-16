@@ -1,3 +1,4 @@
+import { File } from '@/types/File.interface'
 import { readFile, rm, writeFile } from '@/utils/fs-utils'
 import { glob } from 'glob'
 import pLimit from 'p-limit'
@@ -21,12 +22,7 @@ export async function deleteFromModCache(filenames: string[]) {
   }
 }
 
-interface FileData {
-  filename: string
-  data: Buffer
-}
-
-export async function saveToModCache(files: FileData[]) {
+export async function saveToModCache(files: File[]) {
   for (const { filename, data } of files) {
     console.debug('saving %s...')
     await writeFile(filename, data)
@@ -34,7 +30,7 @@ export async function saveToModCache(files: FileData[]) {
   }
 }
 
-export async function getModCacheContents(): Promise<FileData[]> {
+export async function getModCacheContents(): Promise<File[]> {
   const filenames = await getModCacheFilenames()
 
   const limited = pLimit(5)
