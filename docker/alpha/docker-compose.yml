@@ -1,0 +1,13 @@
+version: '3'
+services:
+  app:
+    build: jonfelixrico/modlister:alpha
+    ports:
+      - 3000:3000
+    volumes:
+      # these are REQUIRED to be mounted or else bugs could occur since these
+      # folders do not exist internally
+      - ./files/archives:/app/files/archives
+      - ./files/mods:/app/files/mods
+      - ./files/aux-mods:/app/files/aux-mods
+      - ./config:/app/config
