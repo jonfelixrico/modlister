@@ -1,4 +1,4 @@
-name: Docker build workflow
+name: Build alpha image
 on:
   push:
     branches:
