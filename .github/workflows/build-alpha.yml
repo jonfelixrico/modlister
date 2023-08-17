@@ -1,4 +1,4 @@
-name: Docker build workflow
+name: Build alpha image
 on:
   push:
     branches:
@@ -34,5 +34,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }},alpha
+          tags: |
+            type=ref,event=branch
+            type=raw,value=alpha
           labels: ${{ steps.meta.outputs.labels }}
