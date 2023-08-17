@@ -2,9 +2,7 @@ name: Docker build workflow
 on:
   push:
     branches:
-      - 'master'
       - 'alpha/*'
-      - 'alpha'
 
 jobs:
   verify:
